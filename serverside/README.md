@@ -153,6 +153,8 @@ https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 </pre>
 </details>
 
+<br>
+
 ## 2.AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する
 以下、PHPで実装した例です。
 
@@ -160,56 +162,60 @@ https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 HttpClient等すでにご利用のモジュールがございましたら、そちらをご利用ください。
 
 <details>
-<summary>Httpをリクエストするfunction例</summary>
+<summary>Httpをリクエストするfunction例（php/post.php）</summary>
 <pre>
 <code>
-php/post.php
-<?php
-function execute($requestJson) {
-    $header = [
-        'Content-Type: application/json',
-        'x-api-key: API_KEY' //TODO set API_KEY
-    ];
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, API_ENDPOINT); //TODO set API_ENDPOINT
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($requestJson));
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header); 
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HEADER, true);
-    $response = curl_exec($curl);
-    $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE); 
-    $header = substr($response, 0, $header_size);
-    $body = substr($response, $header_size);
-    $result = json_decode($body, true); 
-    curl_close($curl);
-    return json_encode($result);
-}
+// TODOの箇所を変更してください。
+&lt;?php
+	function execute($requestJson) {
+		$header = [
+		'Content-Type: application/json',
+		'x-api-key: API_KEY' //TODO set API_KEY
+		];
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, API_ENDPOINT); //TODO set API_ENDPOINT
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($requestJson));
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $header); 
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, true);
+		$response = curl_exec($curl);
+		$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE); 
+		$header = substr($response, 0, $header_size);
+		$body = substr($response, $header_size);
+		$result = json_decode($body, true); 
+		curl_close($curl);
+		return json_encode($result);
+	}
 </code>
 </pre>
 </details>
+
+<br>
 
 ### Create Checkout Session APIの実行例
 
 <details>
-<summary>実行例</summary>
+<summary>実行例（php/createCheckoutSession.php）</summary>
 <pre>
 <code>
-php/createCheckoutSession.php
-<?php
-   require_once("post.php");
-   $request = [
-      "action" => "CreateCheckoutSession",
-      "webCheckoutDetail" => [
-         "checkoutReviewReturnUrl"=> "CHECKOUT_REVIEW_RETURN_URL" //TODO set a checkout result URL provided by the merchant. Amazon Pay will redirect to this URL after completing the transaction.
-      ],
-      "storeId" => "STORE_ID" //TODO set store id (sellercentral > application id)
-   ];
-   return execute($request);
+// TODOの箇所を変更してください。
+&lt;?php
+	require_once("post.php");
+	$request = [
+	"action" => "CreateCheckoutSession",
+	"webCheckoutDetail" => [
+		"checkoutReviewReturnUrl"=> "CHECKOUT_REVIEW_RETURN_URL" //TODO set a checkout result URL provided by the merchant. Amazon Pay will redirect to this URL after completing the transaction.
+	],
+	"storeId" => "STORE_ID" //TODO set store id (sellercentral > application id)
+	];
+	return execute($request);
 </code>
 </pre>
 </details>
+
+<br>
 
 ## 終了
 サーバ側の構築は以上です。
