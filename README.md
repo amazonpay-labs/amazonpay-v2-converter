@@ -5,7 +5,7 @@
 
 | V2を独自に実装した場合  |  V2Converterを利用した場合  |
 | ---- | ---- |
-|  <img src="https://user-images.githubusercontent.com/61146815/79706053-d5453300-82f2-11ea-87d2-cf776191d3a3.png" width="600px">  |  <img src="https://user-images.githubusercontent.com/61146815/79706048-d24a4280-82f2-11ea-9425-9be551e95532.png" width="600px">  |
+|  <img src="https://user-images.githubusercontent.com/61146815/79706558-9ca65900-82f4-11ea-9a13-82110feb1586.png" width="600px">  |  <img src="https://user-images.githubusercontent.com/61146815/79706802-6a492b80-82f5-11ea-800b-a01a4530708f.png" width="600px">  |
 
 ### 利用するメリット
 * v1のjavascriptを修正することなく、v2へ移行できるため、実装が簡単になる
