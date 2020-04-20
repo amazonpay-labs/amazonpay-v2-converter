@@ -1,7 +1,7 @@
 # サーバ側
 
 ## 目次
-[1. AWS上にAPIを構築する](https://github.com/amazonpay-labs/amazonpay-v2-converter-readme/tree/master/serverside#1aws%E4%B8%8A%E3%81%ABapi%E3%82%92%E6%A7%8B%E7%AF%89%E3%81%99%E3%82%8B)
+[1. AWS上にAPIを構築する](#1aws%E4%B8%8A%E3%81%ABapi%E3%82%92%E6%A7%8B%E7%AF%89%E3%81%99%E3%82%8B)
 
 [2. AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する](#2aws上に構築したapiをecサイトのサーバ側で実行するコードを実装する)
 
