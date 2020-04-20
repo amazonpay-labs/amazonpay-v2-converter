@@ -158,7 +158,7 @@ https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 ## 2.AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する
 以下、PHPで実装した例です。
 
-### Httpをリクエストするfunctionを実装
+### Httpをリクエストするfunctionを実装する
 HttpClient等すでにご利用のモジュールがございましたら、そちらをご利用ください。
 
 <details>
@@ -194,7 +194,10 @@ HttpClient等すでにご利用のモジュールがございましたら、そ�
 
 <br>
 
-### Create Checkout Session APIの実行例
+### Httpリクエストするfunctionを利用してAWS上のAPIを実行する
+APIへのリクエスト方法やリクエスト・レスポンスについては、[こちら](https://github.com/amazonpay-labs/v2handlerjs)を確認してください。
+
+#### Create Checkout Session APIの実行例
 
 <details>
 <summary>実行例（php/createCheckoutSession.php）</summary>
@@ -211,6 +214,22 @@ HttpClient等すでにご利用のモジュールがございましたら、そ�
 	"storeId" => "STORE_ID" //TODO set store id (sellercentral > application id)
 	];
 	return execute($request);
+</code>
+</pre>
+</details>
+
+#### Get Checkout Session APIの実行例
+
+<details>
+<summary>実行例（php/getCheckoutSession.php）</summary>
+<pre>
+<code
+&lt;?php
+   require_once("post.php");
+   $requestJson = file_get_contents('php://input');
+   $request = json_decode($requestJson);
+   $request->action = 'GetCheckoutSession';
+   return execute($request);
 </code>
 </pre>
 </details>
