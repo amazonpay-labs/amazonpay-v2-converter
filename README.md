@@ -17,6 +17,6 @@
 * v1のjavascriptを[Code Generator](http://amzn.github.io/amazon-pay-sdk-samples/code_generator/?region=JP&ld=APJPLPADirect)に沿って実装していること
 
 ## 導入方法
-### 1. [ServerSide]AWS上にAPIを構築する
+### 1. サーバ側：AWS上にAPIを構築する
 
-### 2. [ClientSide]ECサイトにV2 converterを導入する
+### 2. クライアント側：ECサイトにV2 converterを導入する
