@@ -25,7 +25,11 @@
 ## 導入方法
 ### 1. サーバ側：AWS上にAPIを構築する
 
+[サーバ側導入手順](./serverside/README.md)に従い、構築してください。
+
 ### 2. クライアント側：ECサイトにV2 converterを導入する
+
+[クライアント側導入手順](./clientside/README.md)に従い、導入してください。
 
 <br/>
 
