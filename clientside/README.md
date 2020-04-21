@@ -11,6 +11,8 @@
 
 ## 0. `amazonpayV2Converter.js` を取得する
 
+<br>
+
 ## 1. Aamzon Payボタンをv1からv2へ移行する
 
 ### 1-1. v1用のjavascript `Widgets.js` を削除 または コメントアウトする
