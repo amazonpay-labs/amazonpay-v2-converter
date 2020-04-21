@@ -22,7 +22,7 @@
 |パラメータ|取得方法|
 |---|---|
 |PUBLIC_KEY_ID|[Generate public and private key pair, Get your publicKeyId](https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/get-set-up-for-integration.html#4-get-your-public-key-id)を参考にpublicKeyIdを発行する|
-|PRIVATE_KEY|privateKey.pemを開き、改行を改行コード(\n)に置換する<br><br>例)<br>変更前:<br><img width="500" alt="before" src="https://user-images.githubusercontent.com/61146815/79066075-e937d600-7cef-11ea-8bda-3c2f862317ea.png"><br><br>変更後:<br><img width="700" alt="after" src="https://user-images.githubusercontent.com/61146815/79066074-e806a900-7cef-11ea-8868-bd9c75fe01dc.png">|
+|PRIVATE_KEY|privateKey.pemを開き、改行を改行コード(\n)に置換する<br>※[改行コード変換ツール](./LinefeedCode.html)をローカルへダウンロードし、privateKeyを入力してください。改行コードが挿入された状態で出力します。<br>例)<br>変更前:<br><img width="500" alt="before" src="https://user-images.githubusercontent.com/61146815/79066075-e937d600-7cef-11ea-8bda-3c2f862317ea.png"><br><br>変更後:<br><img width="700" alt="after" src="https://user-images.githubusercontent.com/61146815/79066074-e806a900-7cef-11ea-8868-bd9c75fe01dc.png">|
 <br>
 
 ### 以下のボタンを別タブで表示し、AWS cloudformationを開く

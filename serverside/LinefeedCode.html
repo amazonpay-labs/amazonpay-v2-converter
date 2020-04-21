@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>改行コード追加ツール</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            .simulation-arrow {
+                width: 50px;
+                height: 50px;
+                border: 5px solid;
+                border-color:  transparent transparent #879596 #879596;
+                transform: rotate(-45deg);
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand ml-2" href="/">Linefeed Converter</a>
+        </nav>
+
+        <div class="container">
+            <div class="col-12 mt-5">
+                <h5 class="col-12 my-2">
+                    1.Input Private Key
+                </h5>
+                <div class="col-12">
+                    <textarea name="" id="privateKey" class="w-100" rows="7" placeholder="-----BEGIN RSA PRIVATE KEY-----&#13;&#10;MIIE...&#13;&#10Iw==...&#13;&#10...&#13;&#10;-----END RSA PRIVATE KEY-----"></textarea>
+                </div>
+            </div>
+            <div id="output" style="display: none;">
+                <div class="simulation-arrow mx-auto my-2" id="arrow"></div>
+                <div class="col-12 mt-5">
+                    <h5 class="col-12 my-2">
+                        2.Copy the following output below
+                    </h5>
+                    <div class="col-12">
+                        <textarea name="" id="linefeedPrivateKey" class="w-100" rows="7"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            document.getElementById('privateKey').addEventListener('change', function() {
+                var outputContent = document.getElementById('output')
+                outputContent.style.display = 'none'
+
+                var privateKey = this.value
+                if(!privateKey) {
+                    alert('Please input private Key.')
+                    return
+                }
+
+                var linefeedPrivateKey = privateKey.replace(/\r?\n/g, '\\n')
+                document.getElementById('linefeedPrivateKey').value = linefeedPrivateKey
+                outputContent.style.display = 'block'
+            });
+        </script>
+    </body>
+</html>
