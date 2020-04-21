@@ -33,7 +33,7 @@
 ### サーバ側
 * `CHECKOUT_REVIEW_RETURN_URL` を本番用に変更する
 * [Lambdaに設定するパラメータ](https://github.com/amazonpay-labs/amazonpay-v2-converter-readme/tree/master/serverside#lambda%E3%81%AB%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%9F%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95)の `sandbox` を `true` から `false` へ変更する
-* (推奨)[API gatewayにIP制限を設定する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-resource-policy-whitelist/)
+* (推奨)[リソースポリシーを設定し、API gatewayにIP制限をかける](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-resource-policy-whitelist/)
 
 <details>
 <summary>例)リソースポリシーの設定例</summary>
