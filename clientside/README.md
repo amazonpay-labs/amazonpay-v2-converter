@@ -1,10 +1,17 @@
 # クライアント側
 
-## 目次
+## 概要
+#### 目次
+
+[0. amazonpayv2converterjs-を取得する](#0-amazonpayv2converterjs-を取得する)
+
+[1. aamzon-payボタンをv1からv2へ移行する](#1-aamzon-payボタンをv1からv2へ移行する)
+
+[2. アドレス帳お支払い方法ウィジェットをv1からv2へ移行する](#2-アドレス帳お支払い方法ウィジェットをv1からv2へ移行する)
 
 <br>
 
-## 前提
+#### 前提
 * v1のjavascriptを[Code Generator](http://amzn.github.io/amazon-pay-sdk-samples/code_generator/?region=JP&ld=APJPLPADirect)に沿って実装していること
 
 <br>
@@ -102,7 +109,7 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
 
 <br>
 
-### （補足）amazonpayV2Converter.showButtonの仕様
+### 1-4. （補足）amazonpayV2Converter.showButtonの仕様
 
 #### v1のjavascript上のclientIdを、v2のstoreIdとして利用したい場合
 * フロント側で、`amazonpayV2Converter.getClientId()` を実行し、clientIdを取得、URLのGETパラメータでサーバ側へ渡す
@@ -242,7 +249,7 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
 
 <br>
 
-### （補足）amazonpayV2Converter.showAddress(...).showPayment()の仕様
+### 2-4. （補足）amazonpayV2Converter.showAddress(...).showPayment()の仕様
 
 #### アドレス帳/お支払い方法ウィジェットのデザイン　または　それぞれのウィジェットに表示される「変更」ボタンのデザイン　を修正したい場合
 ※現状v1で、同一の画面にアドレス帳・お支払い方法ウィジェットを設置しているときは、こちらを利用してください。
