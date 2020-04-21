@@ -5,6 +5,8 @@
 
 [2. AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する](#2-aws上に構築したapiをecサイトのサーバ側で実行するコードを実装する)
 
+[エラーの対処方法](#エラーの対処方法)
+
 <br/>
 
 ## 1. AWS上にAPIを構築する
@@ -244,7 +246,7 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 
 <br>
 
-## エラーが発生した場合
+## エラーの対処方法
 ブラウザのコンソールログを確認してください。
 
 #### Can not parse the result of creating checkout session's response: {"message":"Forbidden"}
