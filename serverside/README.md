@@ -166,11 +166,11 @@ https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 ## 2. AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する
 以下、PHPで実装した例です。
 
-### Httpをリクエストするfunctionを実装する
-HttpClient等すでにご利用のモジュールがございましたら、そちらをご利用ください。
+### HTTPをリクエストするfunctionを実装する
+HTTPClient等すでにご利用のモジュールがございましたら、そちらをご利用ください。
 
 <details>
-<summary>Httpをリクエストするfunction例（php/post.php）</summary>
+<summary>HTTPをリクエストするfunction例（php/post.php）</summary>
 <pre>
 <code>
 // TODOの箇所を変更してください。
@@ -241,6 +241,27 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 </code>
 </pre>
 </details>
+
+<br>
+
+## エラーが発生した場合
+ブラウザのコンソールログを確認してください。
+
+#### Can not parse the result of creating checkout session's response: {"message":"Forbidden"}
+パラメータに不備がある可能性があります。
+HTTPリクエスト時にheaderに設定する```API_KEY```に誤りがないか確認してください。
+
+#### Can not parse the result of creating checkout session's response: {"message":"createcheckoutsession: An unexpected error has occurred. {\"reasonCode\":\"MissingParameterValue\",\"message\":\"Value is missing for the required parameter storeId\"}"}
+記載のパラメータに不備がある可能性があります。
+privateKeyやpublicKeyIdに不備がある場合、Lambdaに指定したパラメータに誤りがないか確認してください。
+
+##### Lambdaに指定したパラメータの確認方法
+1.CloudformationからLambdaへ遷移
+
+<img src="https://user-images.githubusercontent.com/61146815/79810742-a4c2cf00-83ae-11ea-8b87-f53e7e7eef49.png" width="500px">
+2.Lambdaのパラメータを確認
+
+<img src="https://user-images.githubusercontent.com/61146815/79810747-a7bdbf80-83ae-11ea-8ed1-872db2259be0.png" width="500px">
 
 <br>
 
