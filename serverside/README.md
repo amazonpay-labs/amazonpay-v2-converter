@@ -253,7 +253,7 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 パラメータに不備がある可能性があります。
 HTTPリクエスト時にheaderに設定する```API_KEY```に誤りがないか確認してください。
 
-#### Can not parse the result of creating checkout session's response: {"message":"createcheckoutsession: An unexpected error has occurred. {\"reasonCode\":\"MissingParameterValue\",\"message\":\"Value is missing for the required parameter storeId\"}"}
+#### Can not parse the result of creating checkout session's response: {"message":"createcheckoutsession: An unexpected error has occurred. {\"reasonCode\":\"MissingParameterValue\",\"message\":\"Value is missing for the required parameter XXX\"}"}
 記載のパラメータに不備がある可能性があります。
 privateKeyやpublicKeyIdに不備がある場合、Lambdaに指定したパラメータに誤りがないか確認してください。
 
