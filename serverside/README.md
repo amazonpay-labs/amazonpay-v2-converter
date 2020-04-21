@@ -204,7 +204,7 @@ HTTPClient等すでにご利用のモジュールがございましたら、そ�
 
 <br>
 
-### Httpリクエストするfunctionを利用してAWS上のAPIを実行する
+### HTTPリクエストするfunctionを利用してAWS上のAPIを実行する
 APIへのリクエスト方法やリクエスト・レスポンスについては、[こちら](https://github.com/amazonpay-labs/v2handlerjs)を確認してください。
 
 #### Create Checkout Session APIの実行例
