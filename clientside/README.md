@@ -18,6 +18,8 @@
 
 ## 0. `amazonpayV2Converter.js` を取得する
 
+[amazonpayV2Converter.js](./amazonpayV2Converter.js)をダウンロードしてください。
+
 <br>
 
 ## 1. Aamzon Payボタンをv1からv2へ移行する
