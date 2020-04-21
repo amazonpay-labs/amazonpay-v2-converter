@@ -100,9 +100,9 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
 
 <br>
 
-### amazonpayV2Converter.showButtonの仕様
+### （補足）amazonpayV2Converter.showButtonの仕様
 
-#### （補足）v1のjavascript上のclientIdを、v2のstoreIdとして利用したい場合
+#### v1のjavascript上のclientIdを、v2のstoreIdとして利用したい場合
 * フロント側で、`amazonpayV2Converter.getClientId()` を実行し、clientIdを取得、URLのGETパラメータでサーバ側へ渡す
 * サーバ側（ここでは `php/createCheckoutSession.php`）で、GETパラメータを取得し、CreateCheckoutSessionのリクエストパラメータに設定する
 
@@ -119,6 +119,8 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl + '?&clientId=' + clien
 </code>
 </pre>
 </details>
+
+<br>
 
 #### お支払い方法のみで利用したい、または　Amazon Payボタンのパラメータを変更したい場合
 [Render the button](https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html#3-render-the-button)の以下のパラメータを設定できます。
