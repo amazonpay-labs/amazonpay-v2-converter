@@ -53,7 +53,7 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
 
 <br>
 
-### 実装した結果
+### 1-3. 実装した結果
 
 <details>
 <summary>Amazon Payボタンをv1からv2へ移行した全体像</summary>
@@ -193,7 +193,7 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
 
 <br>
 
-### 実装した結果
+### 2-3. 実装した結果
 
 <details>
 <summary>Amazon Payボタンをv1からv2へ移行した全体像</summary>
@@ -343,3 +343,8 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
 </code>
 </pre>
 </details>
+
+<br>
+
+## 終了
+クライアント側の実装は以上です。
