@@ -88,7 +88,7 @@ async></script>
 <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
 <script src="amazonpayV2Converter.js"></script>
 <script>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`; // TODO change your CreateCheckoutSession which you implement in 2-2.
+var createCheckoutSessionUrl = `php/createCheckoutSession.php`;
 amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
   sandbox: true, // sandbox flag
 });
@@ -112,7 +112,7 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
 <summary>実装例</summary>
 <pre>
 <code>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`;
+var createCheckoutSessionUrl = 'php/createCheckoutSession.php';
 var clientId = amazonpayV2Converter.getClientId();
 
 amazonpayV2Converter.showButton(createCheckoutSessionUrl + '?&clientId=' + clientId, {
@@ -166,28 +166,180 @@ async></script>
 
 ### 2-2. v2用のjavascript `checkout.js` と、v2converter用のjavascript を追加する
 
-#### createCheckoutSessionを実行するURLを取得する
+#### getCheckoutSessionを実行するURLを取得する
 以下で実装したAPIを利用してください。
 
 [2. AWS上に構築したAPIをECサイトのサーバ側で実行するコードを実装する](https://github.com/amazonpay-labs/amazonpay-v2-converter/blob/master/serverside/README.md#2-aws%E4%B8%8A%E3%81%AB%E6%A7%8B%E7%AF%89%E3%81%97%E3%81%9Fapi%E3%82%92ec%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AE%E3%82%B5%E3%83%BC%E3%83%90%E5%81%B4%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B)
 
 ##### 注意点
 * セキュリティ上、クライアント側から直接AWS上のAPIを実行しないようお願いします。
-* ここでは、`php/createCheckoutSession.php` というURLとします。
+* ここでは、`php/getCheckoutSession.php` というURLとします。
 
 #### `Widgets.js` を削除/コメントアウトした箇所に、以下のjavascriptを追加する
-TODOの箇所を、取得したcreateCheckoutSessionを実行するURLに修正してください。
+TODOの箇所を、取得したgetCheckoutSessionを実行するURLに修正してください。
 
 ```
 <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
 <script src="amazonpayV2Converter.js"></script>
 <script>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`; // TODO createCheckoutSessionを実行するURLに修正
-amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
-  sandbox: true, // sandbox flag
-  // productType: 'PayOnly', // お支払い方法のみで利用したい場合
-});
+var getCheckoutSessionUrl = 'php/getCheckoutSession.php';  // TODO getCheckoutSessionを実行するURLに修正
+
+// アドレス帳/お支払い方法ウィジェットを設置している場合
+amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
+// お支払い方法ウィジェットのみを設置している場合
+// amazonpayV2Converter.showPayment(getCheckoutSessionUrl);
 </script>
 ```
 
 <br>
+
+### 実装した結果
+
+<details>
+<summary>Amazon Payボタンをv1からv2へ移行した全体像</summary>
+<pre>
+<code>
+<script type="text/javascript">
+window.onAmazonLoginReady = function() {
+amazon.Login.setClientId("amzn1.application-oa2-client.5e1a4059588e47909368d628ba92eb5a");
+
+window.onAmazonPaymentsReady = function() {
+　showAddressBookWidget();
+};
+
+function showAddressBookWidget() {
+  // AddressBook
+  new OffAmazonPayments.Widgets.AddressBook({
+  ...
+
+function showWalletWidget(orderReferenceId) {
+  // Wallet
+  new OffAmazonPayments.Widgets.Wallet({
+  ...
+</script>
+
+<!-- remove this tag -->
+<script type="text/javascript" 
+src="https://static-fe.payments-amazon.com/OffAmazonPayments/jp/sandbox/lpa/js/Widgets.js" 
+async></script>
+<!-- remove this tag -->
+
+<!-- add this tag -->
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="amazonpayV2Converter.js"></script>
+<script>
+var getCheckoutSessionUrl = 'php/getCheckoutSession.php';
+amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
+</script>
+<!-- add this tag -->
+
+...
+</code>
+</pre>
+</details>
+
+<br>
+
+<br>
+
+### （補足）amazonpayV2Converter.showAddress(...).showPayment()の仕様
+
+#### アドレス帳/お支払い方法ウィジェットのデザイン　または　それぞれのウィジェットに表示される「変更」ボタンのデザイン　を修正したい場合
+※現状v1で、同一の画面にアドレス帳・お支払い方法ウィジェットを設置しているときは、こちらを利用してください。
+
+<details>
+<summary>実装例</summary>
+<pre>
+<code>
+      amazonpayV2Converter.showAddress(
+        // 第一引数：GetCheckoutSessionを実行するURL
+      'php/getCheckoutSession.php', 
+        // 第二引数：アドレス帳のフレームデザインを変更したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          border: '1px solid #bbb',
+          borderRadius: '6px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 10px 0 10px',
+        }, 
+        // 第三引数：アドレス帳の「変更」ボタンのデザインを修正したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          display: 'block',
+          position: 'relative',
+          fontSize: '1rem',
+          padding: '.375rem .75rem',
+          textAlign: 'center',
+          lineHeight: '1.5',
+          borderRadius: '.25rem',
+          color: '#fff',
+          background: '#6c757d',
+        }
+      ).showPayment(
+        // 第一引数：お支払い方法のフレームデザインを変更したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          border: '1px solid #bbb',
+          borderRadius: '6px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 10px 0 10px',
+        }, 
+        // 第二引数：お支払い方法の「変更」ボタンのデザインを修正したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          display: 'block',
+          position: 'relative',
+          fontSize: '1rem',
+          padding: '.375rem .75rem',
+          textAlign: 'center',
+          lineHeight: '1.5',
+          borderRadius: '.25rem',
+          color: '#fff',
+          background: '#6c757d',
+        }
+      );
+</code>
+</pre>
+</details>
+
+#### お支払い方法ウィジェットのデザイン　または　「変更」ボタンのデザイン　を修正したい場合
+※現状v1で、お支払い方法ウィジェットのみを設置しているときは、こちらを利用してください。
+
+<details>
+<summary>実装例</summary>
+<pre>
+<code>
+      amazonpayV2Converter.showPayment(
+        // 第一引数：GetCheckoutSessionを実行するURL
+      'php/getCheckoutSession.php', 
+        // 第二引数：アドレス帳のフレームデザインを変更したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          border: '1px solid #bbb',
+          borderRadius: '6px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 10px 0 10px',
+        }, 
+        // 第三引数：「変更」ボタンのデザインを修正したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 指定例）
+        {
+          display: 'block',
+          position: 'relative',
+          fontSize: '1rem',
+          padding: '.375rem .75rem',
+          textAlign: 'center',
+          lineHeight: '1.5',
+          borderRadius: '.25rem',
+          color: '#fff',
+          background: '#6c757d',
+        }
+      );
+</code>
+</pre>
+</details>
