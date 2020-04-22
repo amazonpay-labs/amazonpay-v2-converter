@@ -24,7 +24,8 @@ var OffAmazonPayments = (function () {
       getLoginOptions: function () {
         return _loginOptions;
       },
-      setUseCookie: function (cookie) {}
+      setUseCookie: function (cookie) { },
+      logout: function() {}
     };
   })();
   // widgets
