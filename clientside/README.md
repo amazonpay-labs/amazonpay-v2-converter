@@ -358,5 +358,30 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
 
 <br>
 
+## その他
+
+### amazonpayV2Converterの仕様
+v1のjavascriptで記述している一部の情報を取得できます。
+
+#### loginOptions内のパラメータを取得する
+
+```
+amazonpayV2Converter.getLoginOptions();
+```
+
+#### clientIdを取得する
+
+```
+amazonpayV2Converter.getClientId();
+```
+
+#### GETパラメータからCheckoutSessionIdを取得する
+
+```
+amazonpayV2Converter.getCheckoutSessionId();
+```
+
+<br>
+
 ## 終了
 クライアント側の実装は以上です。
