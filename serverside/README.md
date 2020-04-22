@@ -268,7 +268,9 @@ privateKeyやpublicKeyIdに不備がある場合、Lambdaに指定したパラ�
 
 #### Can not parse the result of creating checkout session's response: {"message": "Endpoint request timed out"}
 API Gatewayでタイムアウトが発生している可能性があります。
+
 API実行時に[idempotencykey](https://github.com/amazonpay-labs/v2handlerjs#how-to-set-idempotencykey)を設定することで、APIをリトライすることが可能です。
+
 こちらの機能を利用し、リトライ処理を実装することをおすすめします。
 
 ##### Lambdaに指定したパラメータの確認方法
