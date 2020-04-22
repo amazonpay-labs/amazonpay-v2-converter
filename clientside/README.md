@@ -1,6 +1,9 @@
 # クライアント側導入手順
 
 ## 概要
+
+Amazon Pay V1で実装されたECサイトページを、V2へ移行します。
+
 #### 目次
 
 [0. amazonpayv2converterjs-を取得する](#0-amazonpayv2converterjs-を取得する)
