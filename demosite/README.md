@@ -7,7 +7,7 @@ Amazon Pay V2 Converterのデモサイトです。ローカル環境で起動す
 ## ローカルでの起動方法
 ### 1. デモサイトをダウンロード
 
-[v2converter-demosite-git.zip](./v2converter-demosite-git.zip)の `Donwload` からzipをダウンロードしてください。
+[v2converter-demosite.zip](./v2converter-demosite.zip)の `Donwload` からzipをダウンロードしてください。
 
 <br>
 
