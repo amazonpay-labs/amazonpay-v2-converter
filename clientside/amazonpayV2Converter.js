@@ -25,7 +25,9 @@ var OffAmazonPayments = (function () {
         return _loginOptions;
       },
       setUseCookie: function (cookie) { },
-      logout: function() {}
+      logout: function () {
+        amazon.Pay.signout();
+      }
     };
   })();
   // widgets
@@ -70,15 +72,23 @@ var OffAmazonPayments = (function () {
         return {
           bind: function (id) {
             OffAmazonPayments.Widgets.setAddressElmId(id);
-            this.executeReady();
+            this.executeReady(); // for execute wallet widgets
           },
           getElmId: function () {
             return addressBookElmId;
           },
           executeReady: function () {
-            obj.onReady({
-              getAmazonOrderReferenceId: function () {},
-            });
+            if (obj.hasOwnProperty('onReady')) {
+              obj.onReady({
+                getAmazonOrderReferenceId: function () {},
+              });
+            }
+
+            if (obj.hasOwnProperty('onOrderReferenceCreate')) {
+              obj.onOrderReferenceCreate({
+                getAmazonOrderReferenceId: function () {},
+              });
+            }
           },
         };
       },
@@ -146,8 +156,8 @@ var amazonpayV2Converter = (function () {
       styleSheet.insertRule(keyframes, cssRules.length);
     },
     executeV1Script: function () {
-      if (window.onAmazonLoginReady) onAmazonLoginReady();
-      if (window.onAmazonPaymentsReady) onAmazonPaymentsReady();
+      if (window.hasOwnProperty('onAmazonLoginReady')) onAmazonLoginReady();
+      if (window.hasOwnProperty('onAmazonPaymentsReady')) onAmazonPaymentsReady();
     },
     init: function () {
       this.setObjectAssign();
@@ -327,12 +337,12 @@ var amazonpayV2Converter = (function () {
               post(url).request(postParam).output(function (response) {
                 loading.hide();
 
-                if (response && response.shippingAddress) {
+                if (response && response.hasOwnProperty('shippingAddress')) {
                   addressNode.setAddress(response.shippingAddress).setUpdateButton(checkoutSessionId);
 
                   if (walletContent.exist()) {
                     walletContent.visible();
-                    if(response.paymentPreferences && response.paymentPreferences[0] && response.paymentPreferences[0].paymentDescriptor)
+                    if(response.hasOwnProperty('paymentPreferences') && response.paymentPreferences[0] && response.paymentPreferences[0].hasOwnProperty('paymentDescriptor'))
                       walletContent.setDescriptorText(response.paymentPreferences[0].paymentDescriptor);
                   }
 
@@ -382,7 +392,7 @@ var amazonpayV2Converter = (function () {
                 post(setting.getCheckoutSessionUrl).request(postParam).output(function (response) {
                   loading.hide();
                   walletContent.visible();
-                  if (response.paymentPreferences && response.paymentPreferences[0] && response.paymentPreferences[0].paymentDescriptor) {
+                  if (response.hasOwnProperty('paymentPreferences') && response.paymentPreferences[0] && response.paymentPreferences[0].hasOwnProperty('paymentDescriptor')) {
                       walletContent.setDescriptorText(response.paymentPreferences[0].paymentDescriptor);
                   }
                 }).exec();
@@ -404,13 +414,16 @@ var amazonpayV2Converter = (function () {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '0 10px 0 10px',
+        position: 'relative' //TODO
       };
     }
 
     function getUpdateButton(styleObj, domId) {
       var updateButtonStyle = styleObj || {
         display: 'block',
-        position: 'relative',
+        position: 'absolute',
+        top: '10px',
+        right: '10px',
         fontSize: '1rem',
         padding: '.375rem .75rem',
         textAlign: 'center',
@@ -421,6 +434,7 @@ var amazonpayV2Converter = (function () {
       }
       return createNode('button').styles(updateButtonStyle).attrs({
         id: domId,
+        type: 'button'
       }).text(msgs[region].buttonValue); //TODO translate this button message
     }
   })();
