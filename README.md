@@ -1,7 +1,7 @@
 # amazonpay-v2-converter
 
 ## Amazon Pay V2 Converterとは
-すでにAmazon Pay V1を利用しているECサイトを簡単にV2へ移行するためのツールです。
+すでにAmazon Pay V1を利用しているECサイトを、簡単にV2へ移行するツールです。
 
 | V2を独自に実装した場合  |  V2Converterを利用した場合  |
 | ---- | ---- |
@@ -19,6 +19,13 @@
 ### 前提
 * AWSを利用できること
 * v1のjavascriptを[Code Generator](http://amzn.github.io/amazon-pay-sdk-samples/code_generator/?region=JP&ld=APJPLPADirect)に沿って実装していること
+
+<br/>
+
+### 導入の流れ
+[デモサイト](./demosite/)をローカルで実行することで、導入の流れを掴むことができます。
+
+まずは、こちらをお試しください。
 
 <br/>
 
