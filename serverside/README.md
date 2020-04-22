@@ -2,6 +2,8 @@
 
 ## 概要
 
+AWS上のAmazon Pay V2 APIを構築し、APIをHTTPリクエストするまでの手順です。
+
 #### 目次
 [1. AWS上にAPIを構築する](#1-aws上にapiを構築する)
 
