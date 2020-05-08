@@ -242,13 +242,13 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 <details>
 <summary>実行例（php/getCheckoutSession.php）</summary>
 <pre>
-<code
+<code>
 &lt;?php
-   require_once("post.php");
-   $requestJson = file_get_contents('php://input');
-   $request = json_decode($requestJson);
-   $request->action = 'GetCheckoutSession';
-   return execute($request);
+	require_once("post.php");
+	$requestJson = file_get_contents('php://input');
+	$request = json_decode($requestJson);
+	$request->action = 'GetCheckoutSession';
+	return execute($request);
 </code>
 </pre>
 </details>
