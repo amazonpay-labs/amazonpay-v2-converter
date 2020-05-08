@@ -66,7 +66,7 @@ function showAddressBookWidget() {
 <code>
 $header = [
     'Content-Type: application/json',
-    'x-api-key: 8e3RSbbV4NausXKlvb4Pc3ZA7KII6WTV3YcKvvqb' //TODO AWS上に構築した API_KEY を設定
+    'x-api-key: XXX' //TODO AWS上に構築した API_KEY を設定
 ];
 ...
 curl_setopt($curl, CURLOPT_URL, 'https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/'); //TODO AWS上に構築した API_ENDPOINT を設定
