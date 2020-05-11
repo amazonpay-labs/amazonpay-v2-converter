@@ -299,10 +299,11 @@ Amazon Payボタン表示にjavascriptへ設定
 
 <details>
 <summary>実行例（php/completeCheckoutSession.php）</summary>
-<pre><code>// TODOの箇所を修正してください。
+<pre>
+<code>
+// TODOの箇所を修正してください。
 &lt;?php
 require_once(&quot;post.php&quot;);
-
 try {
     $checkoutSessionId = $_GET[&quot;amazonCheckoutSessionId&quot;];
     $completeCheckoutSessionRequest = array(
@@ -314,21 +315,19 @@ try {
         ]
     );
     $completeCheckoutSessionResult = execute($completeCheckoutSessionRequest);
-
     $completeCheckoutSessionJsonResult = json_decode($completeCheckoutSessionResult);
     $authorizeState = $completeCheckoutSessionJsonResult-&gt;statusDetails-&gt;state;
-
     if (&quot;Completed&quot; == $authorizeState) {
         header(&quot;location: ../3.thanks.html&quot;); //TODO 決済に成功した場合の遷移先を設定
         exit();
     }
-
     header(&quot;location: ../1.cart.html?error=payment-failure&quot;); //TODO 決済に失敗した場合の遷移先を設定。Amazon Payボタンを表示する画面に遷移し、エラーメッセージを表示する
     exit();
-
 } catch (\Exception $e) {
     header(&quot;location: ../1.cart.html?error=payment-failure&quot;); //TODO 決済に失敗した場合の遷移先を設定。Amazon Payボタンを表示する画面に遷移し、エラーメッセージを表示する
-}</code></pre>
+}
+</code>
+</pre>
 </details>
 
 <br>
