@@ -82,7 +82,7 @@ AWS上のAmazon Pay V2 APIを構築し、APIをHTTPリクエストするまで�
 <pre>
 <code>
 curl -X POST -H "Content-Type: application/json" \
--d '{"action": "CreateCheckoutSession", "webCheckoutDetail": {"checkoutReviewReturnUrl":"CHECKOUT_REVIEW_RETURN_URL"},"storeId":"STORE_ID"}' \
+-d '{"action": "CreateCheckoutSession", "webCheckoutDetails": {"checkoutReviewReturnUrl":"CHECKOUT_REVIEW_RETURN_URL"},"storeId":"STORE_ID"}' \
 --header 'x-api-key:API_KEY' \
 API_ENDPOINT
 </code>
@@ -92,7 +92,7 @@ API_ENDPOINT
 <pre>
 <code>
 curl -X POST -H "Content-Type: application/json" \
--d '{"action": "CreateCheckoutSession", "webCheckoutDetail": {"checkoutReviewReturnUrl":"http://XXX.html"},"storeId":"amzn1.application-oa2-client.XXX"}' \
+-d '{"action": "CreateCheckoutSession", "webCheckoutDetails": {"checkoutReviewReturnUrl":"http://XXX.html"},"storeId":"amzn1.application-oa2-client.XXX"}' \
 --header 'x-api-key:XXX' \
 https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 </code>
@@ -107,13 +107,13 @@ https://XXX.execute-api.ap-northeast-1.amazonaws.com/AmazonPay/
 <code>
 {
 	"checkoutSessionId": "XXXX-XXXX-XXXX-XXXX-XXXX",
-	"webCheckoutDetail": {
+	"webCheckoutDetails": {
 		"checkoutReviewReturnUrl": "http://XXX.html",
 		"checkoutResultReturnUrl": null,
 		"amazonPayRedirectUrl": null
 	},
 	"productType": null,
-	"paymentDetail": {
+	"paymentDetails": {
 		"paymentIntent": null,
 		"canHandlePendingAuthorization": false,
 		"chargeAmount": null,
@@ -228,7 +228,7 @@ Amazon Payボタン表示にjavascriptへ設定
 	require_once("post.php");
 	$request = [
 	"action" => "CreateCheckoutSession",
-	"webCheckoutDetail" => [
+	"webCheckoutDetails" => [
 		"checkoutReviewReturnUrl"=> "CHECKOUT_REVIEW_RETURN_URL" //TODO Amazonログイン後の遷移先を指定
 	],
 	"storeId" => "STORE_ID" //TODO (sellercentralの store id)を設定
@@ -267,10 +267,10 @@ Amazon Payボタン表示にjavascriptへ設定
    $updateCheckoutSession = [
       &quot;action&quot; =&gt; &quot;UpdateCheckoutSession&quot;,
       &quot;checkoutSessionId&quot; =&gt; $_POST[&#039;checkoutSessionId&#039;],
-      &quot;webCheckoutDetail&quot; =&gt; [
+      &quot;webCheckoutDetails&quot; =&gt; [
          &quot;checkoutResultReturnUrl&quot; =&gt; &quot;http://.../php/completeCheckoutSession.php&quot; //TODO 以下のcompleteCheckoutSession.phpを指定
       ],
-      &quot;paymentDetail&quot; =&gt; [
+      &quot;paymentDetails&quot; =&gt; [
          &quot;paymentIntent&quot; =&gt; &quot;AuthorizeWithCapture&quot;, //TODO 注文時にオーソリのみ実行:Authorize 即時売上請求まで実行：AuthorizeWithCapture
          &quot;chargeAmount&quot; =&gt; [
             &quot;amount&quot; =&gt; &quot;1000&quot;, //TODO 注文金額を設定
@@ -287,7 +287,7 @@ Amazon Payボタン表示にjavascriptへ設定
    $updateCheckoutSessionResult = execute($updateCheckoutSession);
    $updateJson = json_decode($updateCheckoutSessionResult);
    try {
-      header(&quot;Location: &quot; . $updateJson-&gt;webCheckoutDetail-&gt;amazonPayRedirectUrl);
+      header(&quot;Location: &quot; . $updateJson-&gt;webCheckoutDetails-&gt;amazonPayRedirectUrl);
    } catch(Exception $e) {
       //TODO エラーページへ遷移
       header(&quot;Location: ../1.cart.html?error=failure&quot;); // 売上請求に失敗した場合の遷移先を設定。Amazon Payボタンを表示する画面に遷移し、エラーメッセージを表示する
