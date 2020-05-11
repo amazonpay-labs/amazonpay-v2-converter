@@ -281,7 +281,7 @@ Amazon Payボタン表示にjavascriptへ設定
          &quot;merchantReferenceId&quot; =&gt; &quot;Merchant store order id&quot;, //TODO ECサイトの注文番号を指定（任意だが指定することをおすすめする）
          &quot;merchantStoreName&quot; =&gt; &quot;Merchant store name&quot;, //TODO ECサイト名を指定（必要なときのみ）
          &quot;noteToBuyer&quot; =&gt; &quot;Note to buyer&quot;, //TODO Buyerへ通知するメッセージを指定（必要なときのみ）
-         &quot;customInformation&quot; =&gt; &quot;Custom information&quot; //TODO Buyerへ通知しないメモを設定（必要なときのみ）
+         &quot;customInformation&quot; =&gt; &quot;v2converter:v2&quot;
       ]
    ];
    $updateCheckoutSessionResult = execute($updateCheckoutSession);
