@@ -216,7 +216,8 @@ HTTPClient等すでにご利用のモジュールがございましたら、そ�
 ### HTTPリクエストするfunctionを利用してAWS上のAPIを実行する
 APIへのリクエスト方法やリクエスト・レスポンスについては、[こちら](https://github.com/amazonpay-labs/v2handlerjs)を確認してください。
 
-#### Create Checkout Session APIの実行例
+#### CreateCheckoutSession APIの実行例
+Amazon Payボタン表示にjavascriptへ設定
 
 <details>
 <summary>実行例（php/createCheckoutSession.php）</summary>
@@ -228,16 +229,17 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 	$request = [
 	"action" => "CreateCheckoutSession",
 	"webCheckoutDetail" => [
-		"checkoutReviewReturnUrl"=> "CHECKOUT_REVIEW_RETURN_URL" //TODO set a checkout result URL provided by the merchant. Amazon Pay will redirect to this URL after completing the transaction.
+		"checkoutReviewReturnUrl"=> "CHECKOUT_REVIEW_RETURN_URL" //TODO Amazonログイン後の遷移先を指定
 	],
-	"storeId" => "STORE_ID" //TODO set store id (sellercentral > application id)
+	"storeId" => "STORE_ID" //TODO (sellercentralの store id)を設定
 	];
 	return execute($request);
 </code>
 </pre>
 </details>
 
-#### Get Checkout Session APIの実行例
+#### GetCheckoutSession APIの実行例
+ユーザが指定したお届け先・お支払い方法表示に利用
 
 <details>
 <summary>実行例（php/getCheckoutSession.php）</summary>
@@ -252,6 +254,46 @@ APIへのリクエスト方法やリクエスト・レスポンスについて�
 </code>
 </pre>
 </details>
+
+#### UpdateCheckoutSession APIの実行例
+ユーザが購入確定選択時に実行
+
+<details>
+<summary>実行例（php/updateCheckoutSession.php）</summary>
+<pre><code>
+// TODOの箇所を変更してください。
+&lt;?php
+   require_once(&quot;post.php&quot;);
+   $updateCheckoutSession = [
+      &quot;action&quot; =&gt; &quot;UpdateCheckoutSession&quot;,
+      &quot;checkoutSessionId&quot; =&gt; $_POST[&#039;checkoutSessionId&#039;],
+      &quot;webCheckoutDetail&quot; =&gt; [
+         &quot;checkoutResultReturnUrl&quot; =&gt; &quot;http://.../php/completeCheckoutSession.php&quot; //TODO 以下のcompleteCheckoutSession.phpを指定
+      ],
+      &quot;paymentDetail&quot; =&gt; [
+         &quot;paymentIntent&quot; =&gt; &quot;AuthorizeWithCapture&quot;, //TODO 注文時にオーソリのみ実行:Authorize 即時売上請求まで実行：AuthorizeWithCapture
+         &quot;chargeAmount&quot; =&gt; [
+            &quot;amount&quot; =&gt; &quot;1000&quot;, //TODO 注文金額を設定
+            &quot;currencyCode&quot; =&gt; &quot;JPY&quot;
+         ]
+      ],
+      &quot;merchantMetadata&quot; =&gt; [
+         &quot;merchantReferenceId&quot; =&gt; &quot;Merchant store order id&quot;, //TODO ECサイトの注文番号を指定（任意だが指定することをおすすめする）
+         &quot;merchantStoreName&quot; =&gt; &quot;Merchant store name&quot;, //TODO ECサイト名を指定（必要なときのみ）
+         &quot;noteToBuyer&quot; =&gt; &quot;Note to buyer&quot;, //TODO Buyerへ通知するメッセージを指定（必要なときのみ）
+         &quot;customInformation&quot; =&gt; &quot;Custom information&quot; //TODO Buyerへ通知しないメモを設定（必要なときのみ）
+      ]
+   ];
+   $updateCheckoutSessionResult = execute($updateCheckoutSession);
+   $updateJson = json_decode($updateCheckoutSessionResult);
+   try {
+      header(&quot;Location: &quot; . $updateJson-&gt;webCheckoutDetail-&gt;amazonPayRedirectUrl);
+   } catch(Exception $e) {
+      //TODO エラーページへ遷移
+      header(&quot;Location: ../1.cart.html?error=failure&quot;); // 売上請求に失敗した場合の遷移先を設定。Amazon Payボタンを表示する画面に遷移し、エラーメッセージを表示する
+   }</code></pre>
+</details>
+
 
 <br>
 
