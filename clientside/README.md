@@ -178,6 +178,14 @@ var getCheckoutSessionUrl = 'php/getCheckoutSession.php';  // TODO getCheckoutSe
 
 // アドレス帳/お支払い方法ウィジェットを設置している場合
 amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
+
+// アドレス帳/お支払い方法ウィジェットを設置している場合　かつ　getCheckoutSessionで取得した情報を参照する場合（第二引数でfunctionを指定することで参照できます）
+amazonpayV2Converter.showAddress('php/getCheckoutSession.php', function(response) {
+	var emails = response.buyer.email;
+	var name = response.shippingAddress.name;
+  ...
+}).showPayment();
+
 // お支払い方法ウィジェットのみを設置している場合
 // amazonpayV2Converter.showPayment(getCheckoutSessionUrl);
 </script>
@@ -245,8 +253,14 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
 <code>
       amazonpayV2Converter.showAddress(
         // 第一引数：GetCheckoutSessionを実行するURL
-      'php/getCheckoutSession.php', 
-        // 第二引数：アドレス帳のフレームデザインを変更したい場合、CSSをjson形式で指定。不要な場合は指定なし
+       'php/getCheckoutSession.php', 
+        // 第二引数：GetCheckoutSessionの結果を参照する場合、functionを指定
+        function(response) {
+          var emails = response.buyer.email;
+          var name = response.shippingAddress.name;
+          ...        
+        },
+        // 第三引数：アドレス帳のフレームデザインを変更したい場合、CSSをjson形式で指定。不要な場合は指定なし
         // 指定例）
         {
           border: '1px solid #bbb',
@@ -256,7 +270,7 @@ amazonpayV2Converter.showAddress(getCheckoutSessionUrl).showPayment();
           alignItems: 'center',
           padding: '0 10px 0 10px',
         }, 
-        // 第三引数：アドレス帳の「変更」ボタンのデザインを修正したい場合、CSSをjson形式で指定。不要な場合は指定なし
+        // 第四引数：アドレス帳の「変更」ボタンのデザインを修正したい場合、CSSをjson形式で指定。不要な場合は指定なし
         // 指定例）
         {
           display: 'block',
