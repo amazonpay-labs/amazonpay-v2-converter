@@ -55,10 +55,13 @@ TODOの箇所を、取得したcreateCheckoutSessionを実行するURLに修正�
 <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
 <script src="amazonpayV2Converter.js"></script>
 <script>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`; // TODO createCheckoutSessionを実行するURLに修正
-amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
-  sandbox: true, // sandbox flag
-  // productType: 'PayOnly', // お支払い方法のみで利用したい場合
+amazonpayV2Converter.showButtonWithSignature( {
+  sandbox: true,
+  payloadJSON: 'XXX',
+  signature: 'XXX',
+  publicKeyId: 'XXX'
+  // productType: 'PayOnly', // option お支払い方法のみで利用したい場合
+  // https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html#3-render-the-button
 });
 </script>
 ```
@@ -100,9 +103,13 @@ async></script>
 <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
 <script src="amazonpayV2Converter.js"></script>
 <script>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`;
-amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
-  sandbox: true, // sandbox flag
+amazonpayV2Converter.showButtonWithSignature( {
+  sandbox: true,
+  payloadJSON: 'XXX',
+  signature: 'XXX',
+  publicKeyId: 'XXX'
+  // productType: 'PayOnly', // option お支払い方法のみで利用したい場合
+  // https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html#3-render-the-button
 });
 </script>
 <!-- add this tag -->
@@ -116,26 +123,6 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
 
 ### 1-4. （補足）amazonpayV2Converter.showButtonの仕様
 
-#### v1のjavascript上のclientIdを、v2のstoreIdとして利用したい場合
-* フロント側で、`amazonpayV2Converter.getClientId()` を実行し、clientIdを取得、URLのGETパラメータでサーバ側へ渡す
-* サーバ側（ここでは `php/createCheckoutSession.php`）で、GETパラメータを取得し、CreateCheckoutSessionのリクエストパラメータに設定する
-
-<details>
-<summary>実装例</summary>
-<pre>
-<code>
-var createCheckoutSessionUrl = 'php/createCheckoutSession.php';
-var clientId = amazonpayV2Converter.getClientId();
-
-amazonpayV2Converter.showButton(createCheckoutSessionUrl + '?&clientId=' + clientId, {
-    sandbox: true,
-});
-</code>
-</pre>
-</details>
-
-<br>
-
 #### お支払い方法のみで利用したい、または　Amazon Payボタンのパラメータを変更したい場合
 [Render the button](https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html#3-render-the-button)の以下のパラメータを設定できます。
 
@@ -148,14 +135,16 @@ amazonpayV2Converter.showButton(createCheckoutSessionUrl + '?&clientId=' + clien
 <summary>実装例</summary>
 <pre>
 <code>
-var createCheckoutSessionUrl = `php/createCheckoutSession.php`;
-
-amazonpayV2Converter.showButton(createCheckoutSessionUrl, {
-    sandbox: true,
-    // ledgerCurrency: 'JPY',  // option
-    // checkoutLanguage: 'ja_JP', // option
-    // productType: 'PayOnly', // option
-    // placement: 'Cart' // option
+amazonpayV2Converter.showButtonWithSignature({
+  sandbox: true,
+  payloadJSON: 'XXX',
+  signature: 'XXX',
+  publicKeyId: 'XXX'
+  // productType: 'PayOnly', // option お支払い方法のみで利用したい場合
+  // https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html#3-render-the-button
+  // ledgerCurrency: 'JPY',  // option
+  // checkoutLanguage: 'ja_JP', // option
+  // placement: 'Cart' // option
 });
 </code>
 </pre>
