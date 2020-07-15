@@ -27,6 +27,8 @@ var OffAmazonPayments = (function () {
       setUseCookie: function (cookie) { },
       logout: function () {
         amazon.Pay.signout();
+      },
+      retrieveProfile: function (accessToken, obj) {
       }
     };
   })();
@@ -243,6 +245,50 @@ var amazonpayV2Converter = (function () {
     })();
 
     return {
+      buttonWithSignature: function (buttonParams) {
+        buttonParams = buttonParams || {};
+
+        var getPathName = function(path) {
+          return path.replace(/\\/g, '/').replace(/^[^/]*\/\/[^/]*/, '');
+        };
+
+        var getCheckoutReviewReturnUrl = function () {
+          var path = getPathName(amazon.Login.getReturnUrl())
+          return path ? window.location.origin + path : '';
+        }
+
+        var getCreateCheckoutSessionConfig = function () {
+          var payloadJSON = {
+            webCheckoutDetails: {
+              checkoutReviewReturnUrl: getCheckoutReviewReturnUrl()
+            },
+            storeId: OffAmazonPayments.getClientId()
+          }
+
+          var getConfig = function () {
+            return {
+                payloadJSON: buttonParams.payloadJSON || JSON.stringify(payloadJSON),
+                signature: buttonParams.signature,
+                publicKeyId: buttonParams.publicKeyId
+              }
+          }
+          return buttonParams.createCheckoutSessionConfig || getConfig();
+        }
+
+        var renderConf = {
+          merchantId: OffAmazonPayments.getMerchantId(),
+          ledgerCurrency: buttonParams.ledgerCurrency || 'JPY',
+          checkoutLanguage: buttonParams.checkoutLanguage || 'ja_JP',
+          productType: buttonParams.productType || 'PayAndShip',
+          placement: buttonParams.placement || 'Cart',
+          buttonColor: buttonParams.Color || 'Gold',
+          // configure Create Checkout Session request
+          createCheckoutSessionConfig: getCreateCheckoutSessionConfig()
+        }
+        renderConf.sandbox = buttonParams.sandbox ? true : false;
+
+        amazon.Pay.renderButton('#' + OffAmazonPayments.getBtnElmId(), renderConf);
+      },
       button: function (createCheckoutSessionUrl, buttonParams) {
         // add loading div
         var payButton = document.getElementById(OffAmazonPayments.getBtnElmId());
@@ -329,7 +375,7 @@ var amazonpayV2Converter = (function () {
           });
         }
         return {
-          show: function (url, checkoutSessionId) {
+          show: function (url, checkoutSessionId, getCheckoutSessionResponse) {
             try {
               var postParam = JSON.stringify({
                 "checkoutSessionId": checkoutSessionId
@@ -342,8 +388,10 @@ var amazonpayV2Converter = (function () {
 
                   if (walletContent.exist()) {
                     walletContent.visible();
-                    if(response.hasOwnProperty('paymentPreferences') && response.paymentPreferences[0] && response.paymentPreferences[0].hasOwnProperty('paymentDescriptor'))
+                    if (response.hasOwnProperty('paymentPreferences') && response.paymentPreferences[0] && response.paymentPreferences[0].hasOwnProperty('paymentDescriptor')) {
                       walletContent.setDescriptorText(response.paymentPreferences[0].paymentDescriptor);
+                      getCheckoutSessionResponse(response)
+                    }
                   }
 
                 } else {
@@ -425,12 +473,14 @@ var amazonpayV2Converter = (function () {
         top: '10px',
         right: '10px',
         fontSize: '1rem',
-        padding: '.375rem .75rem',
+        padding: '.575rem .95rem',
         textAlign: 'center',
         lineHeight: '1.5',
         borderRadius: '.25rem',
         color: '#fff',
         background: '#6c757d',
+        border: 'hidden'
+        
       }
       return createNode('button').styles(updateButtonStyle).attrs({
         id: domId,
@@ -492,7 +542,7 @@ var amazonpayV2Converter = (function () {
       },
       exec: function () {
         if (!(_url && _output && _request)) {
-          alert('invalid post pamrameter.');
+          console.error('invalid post pamrameter.');
           _output();
           return;
         }
@@ -526,6 +576,9 @@ var amazonpayV2Converter = (function () {
     showButton: function (createCheckoutSessionUrl, buttonParams) {
       amazonPayWidgets.button(createCheckoutSessionUrl, buttonParams);
     },
+    showButtonWithSignature: function (buttonParams) {
+      amazonPayWidgets.buttonWithSignature(buttonParams);
+    },
     getReturnUrl: function () {
       var returnUrl = amazon.Login.getReturnUrl();
       return returnUrl.match(/http/) ? returnUrl : window.location.origin + '/' + returnUrl;
@@ -543,11 +596,11 @@ var amazonpayV2Converter = (function () {
           (new RegExp('[?|&amp;|#]amazonCheckoutSessionId=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ''])[1].replace(/\+/g, '%20')) || null)
       }
     })(),
-    showAddress: function (getCheckoutSessionUrl, widgetsStyle, updateButtonStyle) {
+    showAddress: function (getCheckoutSessionUrl, getCheckoutSessionResponse, widgetsStyle, updateButtonStyle) {
       amazonPayWidgets.address({
         widgetsStyle: widgetsStyle,
         updateButtonStyle: updateButtonStyle
-      }).show(getCheckoutSessionUrl, this.getCheckoutSessionId());
+      }).show(getCheckoutSessionUrl, this.getCheckoutSessionId(), getCheckoutSessionResponse);
       return {
         showPayment: function (widgetsStyle, updateButtonStyle) {
           amazonPayWidgets.payment({
